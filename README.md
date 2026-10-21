@@ -1,0 +1,84 @@
+# Steam Link for Android XR — patched builds
+
+<p align="center">
+  <img src="assets/steam-link-banner.jpg" alt="Steam Link" width="520">
+</p>
+
+<p align="center">
+  <img alt="Steam Link 2.0.23" src="https://img.shields.io/badge/Steam%20Link-2.0.23-informational?style=flat-square&logo=steam&logoColor=white">
+  <img alt="Patch set 1.32.1" src="https://img.shields.io/badge/patch%20set-1.32.1-success?style=flat-square">
+  <img alt="Driver v1.13.0" src="https://img.shields.io/badge/driver-v1.13.0-blue?style=flat-square">
+  <img alt="Android XR" src="https://img.shields.io/badge/platform-Android%20XR-8b5cf6?style=flat-square">
+</p>
+
+<p align="center">
+  Ready-to-install Steam Link (PCVR) APKs for the <b>Samsung Galaxy XR</b> and other Android XR headsets.<br>
+  Already patched. Nothing to apply on the headset.
+</p>
+
+## What this is
+
+Valve's Steam Link PCVR app only ships for Meta Quest and Pico. This repository holds **pre-patched builds** of that app for Android XR headsets: resolution, color, controller tracking, microphone and app-startup fixes are already compiled in. Install the APK and launch it.
+
+The patch sources live in [**xr-porting-hub**](https://github.com/AngelDark92/xr-porting-hub). This repository only publishes the finished APKs, with no source code.
+
+## Downloads
+
+| Steam Link | Build | Patch set | Driver | Release |
+|---|---|---|---|---|
+| **2.0.23** (latest) | 5002363 | 1.32.1 | v1.13.0 | [Download](https://github.com/AngelDark92/steamlink-androidxr-patched/releases/tag/v2.0.23-1.32.1) |
+| **2.0.20** | 5001712 | 1.32.1 | v1.13.0 | [Download](https://github.com/AngelDark92/steamlink-androidxr-patched/releases/tag/v2.0.20-1.32.1) |
+
+Pick **2.0.23** unless you have a reason to stay on 2.0.20. Match the Steam Link version you already use: settings and stream history carry over, the patched build does not.
+
+## Requirements
+
+<table>
+<tr><td width="120"><img src="assets/galaxyxr-driver.png" width="96" alt="Galaxy XR Companion"></td><td>
+<b>PC side:</b> <a href="https://github.com/AngelDark92/GalaxyXR-Driver/releases/tag/v1.13.0">Galaxy XR Companion driver v1.13.0</a>, installed and verified in SteamVR.<br>
+The driver gives the headset its native identity, panel resolution and controller tracking, and owns the vrlink stream settings these builds expect. Without it the stream falls back to generic vrlink defaults.
+</td></tr>
+</table>
+
+- Samsung Galaxy XR (SM-I610) or another Android XR headset, Android 14 or newer.
+- PC with Steam and SteamVR, wired or 5 GHz Wi-Fi.
+- No root, no Shizuku, no Morphe Manager on the headset.
+
+## Install
+
+1. Uninstall the existing Steam Link app on the headset. These builds are signed with the patch tool's key, so they cannot update over a store install.
+2. Install the APK — `adb install -r Steam_Link-v2.0.23-patches-v1.32.1.apk`, or copy it to the headset and open it.
+3. Launch Steam Link, allow the permission prompts, and set Battery usage to **Unrestricted** if the page appears.
+4. Start SteamVR on the PC and connect.
+
+Stream quality, resolution and image processing are configured **on the PC** in Galaxy XR Companion, not in the app.
+
+## What is patched
+
+- **Android XR startup and permissions** — the app runs on a non-Meta device: manifest, activity launch, storage and microphone grants.
+- **Native resolution** — panel-native 3552×3840 per eye instead of the Meta default.
+- **Color and OLED calibration** — 8-bit color path, P3/SDR handling, dithering for the Galaxy XR panel.
+- **Controllers** — Galaxy XR input profile, grip pose correction, velocity frame and pose extrapolation for throw accuracy; optional Shizuku haptics.
+- **Audio and tracking** — microphone fixed for Android XR; OSC face and eye tracking available on the PC side.
+- **Spacewarp** — half-rate reprojection of the real video projections (patch set 1.32.1).
+
+Full patch list, options and per-build notes: [xr-porting-hub](https://github.com/AngelDark92/xr-porting-hub).
+
+## Versions
+
+Every file name and release tag carries both numbers: `Steam_Link-v2.0.23-patches-v1.32.1.apk` → tag `v2.0.23-1.32.1`.
+
+- **2.0.23** — Valve's Steam Link build that gets patched.
+- **1.32.1** — patch set version. Bumped every time a patch feature is added or fixed, and every supported Steam Link version is rebuilt.
+
+A new patch set means new APKs here. Watch **Releases** for them.
+
+## Links
+
+- Driver and Companion app — [GalaxyXR-Driver](https://github.com/AngelDark92/GalaxyXR-Driver)
+- Patch sources and changelog — [xr-porting-hub](https://github.com/AngelDark92/xr-porting-hub)
+- Problems with a build — [open an issue](https://github.com/AngelDark92/steamlink-androidxr-patched/issues)
+
+## Notes
+
+Unofficial builds. Not affiliated with or endorsed by Valve or Samsung. Steam Link is Valve's software: own it on Steam before installing. Controller tracking patches are based on [@4uva4ek](https://github.com/4uva4ek)'s Galaxy XR modules, built with [Morphe](https://morphe.software).

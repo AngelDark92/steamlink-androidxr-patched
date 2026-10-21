@@ -1,0 +1,13 @@
+# Release binaries are GitHub release assets, never repository files
+*.apk
+*.apks
+*.xapk
+*.apkm
+*.sha256
+release.json
+rel.json
+
+# OS junk
+Thumbs.db
+desktop.ini
+.DS_Store
