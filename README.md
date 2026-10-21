@@ -42,7 +42,7 @@ The driver gives the headset its native identity, panel resolution and controlle
 
 - Samsung Galaxy XR (SM-I610) or another Android XR headset, Android 14 or newer.
 - PC with Steam and SteamVR, wired or 5 GHz Wi-Fi.
-- No root, no Shizuku, no Morphe Manager on the headset.
+- No root, no Shizuku, no Morphe Manager required on the headset.
 
 ## Install
 
