@@ -8,7 +8,7 @@ Distribution repository for **pre-patched Steam Link (PCVR) APKs** that run on t
 |---|---|
 | `README.md` | Public face: what the builds are, download table, install steps, patched feature list. |
 | `AGENTS.md` | This file: rules and the release contract. |
-| `.agents/skills/release-steamlink-apk/SKILL.md` | Exact release playbook, commands and pitfalls. Read it before any release. |
+| `.opencode/skills/release-steamlink-apk/SKILL.md` | Exact release playbook, commands and pitfalls. Read it before any release. |
 | `assets/` | README images only. Nothing executable. |
 | `*.apk` | Local, **untracked** release candidates. Never committed. |
 
@@ -40,4 +40,4 @@ Distribution repository for **pre-patched Steam Link (PCVR) APKs** that run on t
 6. Upload the APK plus a `.sha256` sidecar; paste the verification data and install steps into the notes.
 7. Read the release back through the API: asset names, sizes, state `uploaded`. Report, and leave the APK untracked.
 
-Exact commands and failure handling: `.agents/skills/release-steamlink-apk/SKILL.md`.
+Exact commands and failure handling: `.opencode/skills/release-steamlink-apk/SKILL.md`.
