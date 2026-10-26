@@ -15,7 +15,7 @@ metadata:
 Workspace scope: `steamlink-androidxr-patched/`. Prose paths below are relative
 to that checkout unless they are explicit workspace links.
 
-Use when the owner drops a new `Steam_Link-v<app>-patches-v<patchset>.apk` in this folder and asks for a release.
+Use when the owner drops a new `Steam_Link-v<app>-XR_Porting_Hub-v<patchset>.apk` (older builds used `-patches-v<patchset>`) in this folder and asks for a release.
 
 ## Before touching anything
 
@@ -23,7 +23,7 @@ Ask the owner for anything not already stated. Do not guess:
 
 1. **Driver version** these APKs are compatible with (e.g. `v1.13.0`). Required in the release notes.
 2. **Patch set version** — confirm from the file name and against `xr-porting-hub` `CHANGELOG.md`.
-3. **Scope** — which Steam Link versions to publish (2.0.20, 2.0.23, both).
+3. **Scope** — which Steam Link versions to publish (2.0.20, 2.0.24, or a subset). 2.0.23 is no longer distributed; publish it only on explicit owner request.
 
 Then verify each APK matches its name.
 
@@ -33,7 +33,7 @@ Then verify each APK matches its name.
 cd "D:/Angelo/Desktop/SteamLink-GalaxyXR-Windows-Toolkit-FULL/steamlink-androidxr-patched"
 AAPT="F:/Runtimes/AndroidSdk/build-tools/36.0.0/aapt2.exe"
 AS="F:/Runtimes/AndroidSdk/build-tools/36.0.0/apksigner.bat"
-APK="Steam_Link-v2.0.23-patches-v1.32.1.apk"
+APK="Steam_Link-v2.0.20-XR_Porting_Hub-v2.4.0.apk"
 
 "$AAPT" dump badging "D:/Angelo/Desktop/SteamLink-GalaxyXR-Windows-Toolkit-FULL/steamlink-androidxr-patched/$APK" | head -1
 "$AS" verify --print-certs "D:/Angelo/Desktop/SteamLink-GalaxyXR-Windows-Toolkit-FULL/steamlink-androidxr-patched/$APK" | head -3
@@ -45,7 +45,7 @@ Checks, all must pass:
 | Check | Expected |
 |---|---|
 | `package` | `com.valvesoftware.steamlinkvr` |
-| `versionName` / `versionCode` | `2.0.20`/`5001712` or `2.0.23`/`5002363`, matching the file name |
+| `versionName` / `versionCode` | `2.0.20`/`5001712`, `2.0.23`/`5002363` or `2.0.24`/`5002395`, matching the file name |
 | Signature | verifies, signer `CN=Morphe` |
 | Size | ~40–45 MB; near-zero or >200 MB means a broken build, stop |
 
@@ -53,10 +53,10 @@ The `.sha256` sidecar is a second release asset.
 
 ## 2. Update the README table
 
-Newest Steam Link version first. One row per published pair:
+Recommended build first, then the remaining builds newest-first. One row per published pair:
 
 ```markdown
-| **2.0.23** (latest) | 5002363 | 1.32.1 | v1.13.0 | [Download](https://github.com/AngelDark92/steamlink-androidxr-patched/releases/tag/v2.0.23-1.32.1) |
+| **2.0.20** (recommended) | 5001712 | XR Porting Hub 2.4.0 | v1.15.0 | [Download](https://github.com/AngelDark92/steamlink-androidxr-patched/releases/tag/v2.0.20-2.4.0) |
 ```
 
 When a new patch set supersedes an old one, update the existing rows instead of adding duplicate versions, but never delete a release that still works — only the README row changes. Keep the badges at the top in sync (`Steam Link-<newest>`, `patch set-<patch set>`, `driver-<driver>`).
@@ -89,18 +89,21 @@ Build the payload with Python so quoting and newlines cannot break the JSON:
 ```bash
 python - <<'PY'
 import json
-notes = """Patched Steam Link **2.0.23** (build 5002363) for Samsung Galaxy XR / Android XR.
+notes = """Patched Steam Link **2.0.20** (build 5001712) for Samsung Galaxy XR / Android XR.
 
-**Requires Galaxy XR Companion driver v1.13.0** — https://github.com/AngelDark92/GalaxyXR-Driver/releases/tag/v1.13.0
+**Recommended build.** This release is marked Latest; 2.0.24 is published for reference only because it has problems on some configurations.
 
-## Patch set 1.32.1
-- spacewarp: warp the real video projections, half-rate mode
+**Requires Galaxy XR Companion driver v1.15.0** — https://github.com/AngelDark92/GalaxyXR-Driver/releases/tag/v1.15.0
+
+## Patch set XR Porting Hub 2.4.0
+- SurfaceVideoTrigger: fixed the runtime blocker and preserved layer chains
+- GXR Spacewarp layer: expanded tests and configuration coverage
 
 Full patch list: https://github.com/AngelDark92/xr-porting-hub
 
 ## Install
 1. Uninstall the existing Steam Link app (different signing key).
-2. `adb install -r Steam_Link-v2.0.23-patches-v1.32.1.apk`
+2. `adb install -r Steam_Link-v2.0.20-XR_Porting_Hub-v2.4.0.apk`
 3. Launch, allow permissions, set Battery usage to Unrestricted.
 4. Start SteamVR on the PC and connect.
 
@@ -108,8 +111,8 @@ Full patch list: https://github.com/AngelDark92/xr-porting-hub
 SHA-256: `<hash>`
 Signer: CN=Morphe (test key)
 """
-json.dump({"tag_name":"v2.0.23-1.32.1",
-           "name":"Steam Link 2.0.23 — patch set 1.32.1",
+json.dump({"tag_name":"v2.0.20-2.4.0",
+           "name":"Steam Link 2.0.20 — patch set XR Porting Hub 2.4.0",
            "target_commitish":"<sha from step 3>",
            "body":notes,"draft":False,"prerelease":False,
            "make_latest":"true"}, open("release.json","w"), indent=1)
@@ -121,11 +124,13 @@ curl -s -H "Authorization: Bearer $TOK" -H "Accept: application/vnd.github+json"
 python -c "import json;d=json.load(open('rel.json'));print(d.get('id'),d.get('tag_name'),d.get('message',''))"
 ```
 
+For a reference build such as 2.0.24, use the same payload with that build's tag, title, notes and install filename, and set `"make_latest":"false"`. Never reuse the recommended-build notes on a reference release.
+
 Release rules:
 
-- Tag `v<app-version>-<patch-set>`, e.g. `v2.0.20-1.32.1`, `v2.0.23-1.32.1`. One release per pair.
+- Tag `v<app-version>-<patch-set>`, e.g. `v2.0.20-2.4.0`, `v2.0.24-2.4.0`. One release per pair.
 - Title `Steam Link <app-version> — patch set <patch-set>`.
-- `make_latest` is `"true"` only for the newest Steam Link version; the older one gets `"false"` so the repo's Latest badge stays on the current build.
+- `make_latest` follows the owner's recommendation: `"true"` on the build users should install, `"false"` on reference builds, even when the reference build has the newer Steam Link version.
 - Notes always carry the driver line, the patch-set highlights from `xr-porting-hub` `CHANGELOG.md`, install steps, and SHA-256.
 
 ## 5. Upload assets
@@ -135,13 +140,13 @@ RID=$(python -c "import json;print(json.load(open('rel.json'))['id'])")
 REPO="AngelDark92/steamlink-androidxr-patched"
 curl -s -X POST -H "Authorization: Bearer $TOK" \
   -H "Content-Type: application/vnd.android.package-archive" \
-  --data-binary @"Steam_Link-v2.0.23-patches-v1.32.1.apk" \
-  "https://uploads.github.com/repos/$REPO/releases/$RID/assets?name=Steam_Link-v2.0.23-patches-v1.32.1.apk"
+  --data-binary @"Steam_Link-v2.0.20-XR_Porting_Hub-v2.4.0.apk" \
+  "https://uploads.github.com/repos/$REPO/releases/$RID/assets?name=Steam_Link-v2.0.20-XR_Porting_Hub-v2.4.0.apk"
 
 curl -s -X POST -H "Authorization: Bearer $TOK" \
   -H "Content-Type: text/plain" \
-  --data-binary @"Steam_Link-v2.0.23-patches-v1.32.1.apk.sha256" \
-  "https://uploads.github.com/repos/$REPO/releases/$RID/assets?name=Steam_Link-v2.0.23-patches-v1.32.1.apk.sha256"
+  --data-binary @"Steam_Link-v2.0.20-XR_Porting_Hub-v2.4.0.apk.sha256" \
+  "https://uploads.github.com/repos/$REPO/releases/$RID/assets?name=Steam_Link-v2.0.20-XR_Porting_Hub-v2.4.0.apk.sha256"
 ```
 
 Upload host is `uploads.github.com`, not `api.github.com`. Asset limit 2 GB; these are ~42 MB.
@@ -149,22 +154,28 @@ Upload host is `uploads.github.com`, not `api.github.com`. Asset limit 2 GB; the
 ## 6. Read it back
 
 ```bash
-curl -s -H "Authorization: Bearer $TOK" \
-  "https://api.github.com/repos/AngelDark92/steamlink-androidxr-patched/releases/tags/v2.0.23-1.32.1" \
-  | python -c "
+for TAG in v2.0.20-2.4.0 v2.0.24-2.4.0; do
+  curl -s -H "Authorization: Bearer $TOK" \
+    "https://api.github.com/repos/AngelDark92/steamlink-androidxr-patched/releases/tags/$TAG" \
+    | python -c "
 import sys,json
 d=json.load(sys.stdin)
-print(d['tag_name'], d['target_commitish'][:7], d['make_latest'] if 'make_latest' in d else '')
+print(d['tag_name'], d['target_commitish'][:7], d['draft'])
 for a in d['assets']: print(a['name'], a['size'], a['state'], a['browser_download_url'])
 "
+done
+
+curl -s -H "Authorization: Bearer $TOK" \
+  "https://api.github.com/repos/AngelDark92/steamlink-androidxr-patched/releases/latest" \
+  | python -c "import sys,json;print('latest:', json.load(sys.stdin)['tag_name'])"
 ```
 
-Asset `state` must be `uploaded` and `size` must equal the local file size. Then run `git status --short`: only documentation files may be modified, APKs stay untracked. Delete `release.json`, `rel.json` and the token shell variable when done.
+Asset `state` must be `uploaded` and `size` must equal the local file size. The `releases/latest` query must report the recommended tag (`v2.0.20-2.4.0` here); `make_latest` is a write-only request field and does not appear in the release object. Then run `git status --short`: only documentation files may be modified, APKs stay untracked. Delete `release.json`, `rel.json` and the token shell variable when done.
 
 ## Pitfalls
 
 - **Empty repository rejects releases** with 422: push the documentation commit first; tags need a commit to point at.
 - **Duplicate tag** returns 422. Fix: `DELETE /repos/<repo>/releases/<id>` then `DELETE /repos/<repo>/git/refs/tags/<tag>`, then retry.
-- **Missing `make_latest`** on the older build flips the repo's Latest badge to a superseded pair.
+- **Missing `make_latest:"false"`** on the newer reference build lets GitHub mark it Latest. Set it explicitly on every reference release and confirm `/releases/latest` afterwards.
 - Do not `git add -f` an APK. If a release must be replaced, delete the release and tag, not git history.
-- Version name alone is not compatibility: 2.0.20 and 2.0.23 differ by build code, and the patched payload is compiled per exact base. Refuse to publish an APK whose build code is not in the supported list.
+- Version name alone is not compatibility: 2.0.20, 2.0.23 and 2.0.24 differ by build code, and the patched payload is compiled per exact base. Refuse to publish an APK whose build code is not in the supported list.

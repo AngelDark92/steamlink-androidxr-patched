@@ -15,9 +15,9 @@ Distribution repository for **pre-patched Steam Link (PCVR) APKs** that run on t
 ## Hard rules
 
 1. **APKs never enter git.** `*.apk` is gitignored on purpose. Binaries ship as release assets; git carries documentation only. If a commit ever stages an APK, stop and unstage it.
-2. **One release per (Steam Link version, patch set) pair.** Tag `v<app-version>-<patch-set>`, e.g. `v2.0.23-1.32.1`, one APK asset each. Two app versions patched with the same patch set means two releases.
+2. **One release per (Steam Link version, patch set) pair.** Tag `v<app-version>-<patch-set>`, e.g. `v2.0.24-2.4.0`, one APK asset each. Two app versions patched with the same patch set means two releases.
 3. **Every release states the compatible driver version.** The owner usually names it ("compatible with driver v1.13.0"). If the owner does not say, **ask before publishing**. Never guess, and never widen the claim to "or newer" without evidence.
-4. **The file name is the contract, the APK is the truth.** Expected name `Steam_Link-v<app-version>-patches-v<patch-set>.apk`. Verify `versionName`, `versionCode` and signer inside the APK against the name before publishing.
+4. **The file name is the contract, the APK is the truth.** Expected name `Steam_Link-v<app-version>-XR_Porting_Hub-v<patch-set>.apk`; older builds used `Steam_Link-v<app-version>-patches-v<patch-set>.apk`. Verify `versionName`, `versionCode` and signer inside the APK against the name before publishing.
 5. **This repository holds no code.** Do not add scripts, workflows, or patch sources here. Fixes belong in `xr-porting-hub`.
 6. **No rebuilds.** Publish the APK the owner drops in this folder. If it is missing, misnamed, or its build code is not a known `xr-porting-hub` base, stop and report instead of patching it yourself.
 7. **Publish only what was asked.** No extra tags, no draft releases, no retroactive edits to published builds.
@@ -25,7 +25,7 @@ Distribution repository for **pre-patched Steam Link (PCVR) APKs** that run on t
 ## Pinned facts
 
 - Package: `com.valvesoftware.steamlinkvr`
-- Supported bases (`versionName` / `versionCode`): `2.0.20` / `5001712`, `2.0.23` / `5002363`
+- Supported bases (`versionName` / `versionCode`): `2.0.20` / `5001712`, `2.0.23` / `5002363` (no longer distributed), `2.0.24` / `5002395`
 - Signer of patched builds: `CN=Morphe` test key, so an existing store install must be uninstalled before installing one of these
 - Patch set version and feature list: `xr-porting-hub` `CHANGELOG.md` (bump it, do not invent it)
 - Driver releases: https://github.com/AngelDark92/GalaxyXR-Driver/releases
