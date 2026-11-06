@@ -45,7 +45,7 @@ Checks, all must pass:
 | Check | Expected |
 |---|---|
 | `package` | `com.valvesoftware.steamlinkvr` |
-| `versionName` / `versionCode` | `2.0.20`/`5001712`, `2.0.23`/`5002363` or `2.0.24`/`5002395`, matching the file name |
+| `versionName` / `versionCode` | `2.0.20`/`5001712`, `2.0.23`/`5002363` or `2.0.24`/`5002527` (earlier `5002395`), matching the file name |
 | Signature | verifies, signer `CN=Morphe` |
 | Size | ~40–45 MB; near-zero or >200 MB means a broken build, stop |
 

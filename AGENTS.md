@@ -25,7 +25,7 @@ Distribution repository for **pre-patched Steam Link (PCVR) APKs** that run on t
 ## Pinned facts
 
 - Package: `com.valvesoftware.steamlinkvr`
-- Supported bases (`versionName` / `versionCode`): `2.0.20` / `5001712`, `2.0.23` / `5002363` (no longer distributed), `2.0.24` / `5002395`
+- Supported bases (`versionName` / `versionCode`): `2.0.20` / `5001712`, `2.0.23` / `5002363` (no longer distributed), `2.0.24` / `5002527` (beta; tracks the newest Valve build, earlier `5002395` was published before)
 - Signer of patched builds: `CN=Morphe` test key, so an existing store install must be uninstalled before installing one of these
 - Patch set version and feature list: `xr-porting-hub` `CHANGELOG.md` (bump it, do not invent it)
 - Driver releases: https://github.com/AngelDark92/GalaxyXR-Driver/releases
