@@ -6,8 +6,8 @@
 
 <p align="center">
   <img alt="Steam Link 2.0.20" src="https://img.shields.io/badge/Steam%20Link-2.0.20-informational?style=flat-square&logo=steam&logoColor=white">
-  <img alt="XR Porting Hub 2.8.0" src="https://img.shields.io/badge/XR%20Porting%20Hub-2.8.0-success?style=flat-square">
-  <img alt="Driver v2.1.1" src="https://img.shields.io/badge/driver-v2.1.1-blue?style=flat-square">
+  <img alt="XR Porting Hub 2.10.0" src="https://img.shields.io/badge/XR%20Porting%20Hub-2.10.0-success?style=flat-square">
+  <img alt="Driver latest" src="https://img.shields.io/badge/driver-latest-blue?style=flat-square">
   <img alt="Android XR" src="https://img.shields.io/badge/platform-Android%20XR-8b5cf6?style=flat-square">
 </p>
 
@@ -26,16 +26,16 @@ The patch sources live in [**xr-porting-hub**](https://github.com/AngelDark92/xr
 
 | Steam Link | Build | Patch set | Driver | Release |
 |---|---|---|---|---|
-| **2.0.20** (recommended) | 5001712 | XR Porting Hub 2.8.0 | v2.1.1 | [Download](https://github.com/AngelDark92/steamlink-androidxr-patched/releases/tag/v2.0.20-2.8.0) |
-| **2.0.24** (beta) | 5002395 | XR Porting Hub 2.8.0 | v2.1.1 | [Download](https://github.com/AngelDark92/steamlink-androidxr-patched/releases/tag/v2.0.24-2.8.0) |
+| **2.0.20** (recommended) | 5001712 | XR Porting Hub 2.10.0 | [latest](https://github.com/AngelDark92/GalaxyXR-Driver/releases/latest) | [Download](https://github.com/AngelDark92/steamlink-androidxr-patched/releases/tag/v2.0.20-2.10.0) |
+| **2.0.24** (beta) | 5002527 | XR Porting Hub 2.10.0 | [latest](https://github.com/AngelDark92/GalaxyXR-Driver/releases/latest) | [Download](https://github.com/AngelDark92/steamlink-androidxr-patched/releases/tag/v2.0.24-2.10.0) |
 
-Install **2.0.20**: it is the recommended build and the release marked Latest. **2.0.20** is a fixed base that will not change. **2.0.24** is a beta/reference build based on Valve build 5002395 and may have problems on some configurations. 2.0.23 is no longer offered.
+Install **2.0.20**: it is the recommended build and the release marked Latest. **2.0.20** is a fixed base that will not change. **2.0.24** is a beta/reference build based on Valve build 5002527 and may have problems on some configurations. 2.0.23 is no longer offered.
 
 ## Requirements
 
 <table>
 <tr><td width="120"><img src="assets/galaxyxr-driver.png" width="96" alt="Galaxy XR Companion"></td><td>
-<b>PC side:</b> <a href="https://github.com/AngelDark92/GalaxyXR-Driver/releases/tag/v2.1.1">Galaxy XR Companion driver v2.1.1</a>, installed and verified in SteamVR.<br>
+<b>PC side:</b> <a href="https://github.com/AngelDark92/GalaxyXR-Driver/releases/latest">latest Galaxy XR Companion driver release</a>, installed and verified in SteamVR.<br>
 The driver gives the headset its native identity, panel resolution and controller tracking, and owns the vrlink stream settings these builds expect. Without it the stream falls back to generic vrlink defaults.
 </td></tr>
 </table>
@@ -47,7 +47,7 @@ The driver gives the headset its native identity, panel resolution and controlle
 ## Install
 
 1. Uninstall the existing Steam Link app on the headset. These builds are signed with the patch tool's key, so they cannot update over a store install.
-2. Install the APK — `adb install -r Steam_Link-v2.0.20-XR_Porting_Hub-v2.8.0.apk`, or copy it to the headset and open it.
+2. Install the APK — `adb install -r Steam_Link-v2.0.20-XR_Porting_Hub-v2.10.0.apk`, or copy it to the headset and open it.
 3. Launch Steam Link, allow the permission prompts, and set Battery usage to **Unrestricted** if the page appears.
 4. Start SteamVR on the PC and connect.
 
@@ -59,7 +59,7 @@ Stream quality, resolution and image processing are configured **on the PC** in 
 - **Native resolution** — panel-native 3552×3840 per eye instead of the Meta default.
 - **Color and OLED calibration** — 8-bit color path, P3/SDR handling, dithering for the Galaxy XR panel.
 - **Controllers** — Galaxy XR input profile, grip pose correction, velocity frame and pose extrapolation for throw accuracy; optional Shizuku haptics.
-- **Audio and tracking** — microphone fixed for Android XR; OSC face and eye tracking available on the PC side.
+- **Audio and tracking** — microphone fixed for Android XR, and on 2.0.20 the mic input now recovers after a Gemini mic disconnect; OSC face and eye tracking available on the PC side.
 - **Codecs** — v8 codec support with stability and crash fixes.
 - **Spacewarp** — Async Spacewarp with carrier generation tracking, context-safe resource ownership and a dormant fast path; half-rate synthesis retired. Patch set 2.8.0 restores Alpha-0 on the 2.0.20 build because the native quad composition caused issues, while the 2.0.24 build continues to use Valve's stock quad composition as supplied by Valve. The far-plane experiment is available as an optional patch, not enabled by default.
 
@@ -67,10 +67,10 @@ Full patch list, options and per-build notes: [xr-porting-hub](https://github.co
 
 ## Versions
 
-Every file name and release tag carries both numbers: `Steam_Link-v2.0.20-XR_Porting_Hub-v2.8.0.apk` → tag `v2.0.20-2.8.0`.
+Every file name and release tag carries both numbers: `Steam_Link-v2.0.20-XR_Porting_Hub-v2.10.0.apk` → tag `v2.0.20-2.10.0`.
 
 - **2.0.20** / **2.0.24** — Valve's Steam Link build that gets patched.
-- **XR Porting Hub 2.8.0** — patch set version, matching the `xr-porting-hub` release. Bumped every time a patch feature is added or fixed, and every supported Steam Link version is rebuilt.
+- **XR Porting Hub 2.10.0** — patch set version, matching the `xr-porting-hub` release. Bumped every time a patch feature is added or fixed, and every supported Steam Link version is rebuilt.
 
 Older patch sets used `-patches-v<version>` in the file name; the tag format is unchanged.
 
